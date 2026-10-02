@@ -22,12 +22,12 @@ import {
 const NAV: { href: string; label: string; icon: LucideIcon; enabled: boolean }[] = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard, enabled: true },
   { href: "/chat", label: "Chat", icon: MessageSquare, enabled: false },
-  { href: "/projects", label: "Projects", icon: FolderKanban, enabled: false },
-  { href: "/tasks", label: "Tasks", icon: CheckSquare, enabled: false },
-  { href: "/notes", label: "Notes", icon: StickyNote, enabled: false },
-  { href: "/memory", label: "Memory", icon: Brain, enabled: false },
+  { href: "/projects", label: "Projects", icon: FolderKanban, enabled: true },
+  { href: "/tasks", label: "Tasks", icon: CheckSquare, enabled: true },
+  { href: "/notes", label: "Notes", icon: StickyNote, enabled: true },
+  { href: "/memory", label: "Memory", icon: Brain, enabled: true },
   { href: "/focus", label: "Focus", icon: Timer, enabled: false },
-  { href: "/settings", label: "Settings", icon: Settings, enabled: false },
+  { href: "/settings", label: "Settings", icon: Settings, enabled: true },
 ];
 
 export default function AppShell({
@@ -53,7 +53,7 @@ export default function AppShell({
 
       <nav className="flex-1 space-y-1 px-2">
         {NAV.map(({ href, label, icon: Icon, enabled }) => {
-          const active = pathname === href;
+          const active = pathname === href || pathname.startsWith(`${href}/`);
           const base = "flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition";
           if (!enabled) {
             return (
