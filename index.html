@@ -1,189 +1,668 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#090914">
-  <meta name="description" content="Meet Luna — Jude's personal AI assistant, running privately on OpenClaw.">
-  <title>Luna — A Little More Human</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#09090f">
+
+  <title>Luna — Intelligence with Personality</title>
+  <meta name="description" content="Meet Luna, a personal AI assistant built to think, help, remember, and grow alongside you.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: #090914;
-      color: #f5f1ff;
-      font-family: Inter, system-ui, sans-serif;
-      line-height: 1.7;
+    :root {
+      --bg: #09090f;
+      --surface: #11111b;
+      --surface-2: #171725;
+      --text: #f4f1ff;
+      --muted: #9994ad;
+      --accent: #a78bfa;
+      --accent-2: #c4b5fd;
+      --border: rgba(255,255,255,.09);
+      --glow: rgba(139,92,246,.18);
     }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background:
+        radial-gradient(ellipse at 50% -20%, rgba(124,58,237,.19), transparent 55%),
+        var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
     a { color: inherit; text-decoration: none; }
-    .wrap { width: min(1080px, 90%); margin: auto; }
-    header {
-      height: 82px;
+
+    .container {
+      width: min(1100px, calc(100% - 40px));
+      margin: auto;
+    }
+
+    .navbar {
+      height: 78px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #252239;
+      border-bottom: 1px solid var(--border);
     }
-    .brand { font-size: 23px; font-weight: 750; letter-spacing: -1px; }
-    .brand span { color: #b69aff; }
-    nav { display: flex; gap: 26px; color: #b5adc9; font-size: 14px; }
-    nav a:hover, .links a:hover { color: #fff; }
-    .hero { text-align: center; padding: 110px 0 95px; }
-    .orb {
-      width: 112px; height: 112px; margin: auto auto 25px;
-      display: grid; place-items: center; border-radius: 50%;
-      background: radial-gradient(circle at 35% 30%, #bba3ff, #55418d 55%, #201638);
-      box-shadow: 0 0 85px #8a68d855;
-      font-size: 55px;
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Space Grotesk", sans-serif;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 3px;
     }
+
+    .brand img {
+      width: 43px;
+      height: 43px;
+      object-fit: contain;
+      background: #fff;
+      border-radius: 12px;
+      padding: 5px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-links a:hover { color: white; }
+
+    .nav-contact {
+      border: 1px solid var(--border);
+      padding: 9px 16px;
+      border-radius: 30px;
+      color: var(--text) !important;
+    }
+
+    .hero {
+      min-height: 610px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 0 110px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: var(--glow);
+      filter: blur(100px);
+      z-index: -1;
+    }
+
+    .hero-logo {
+      width: 112px;
+      height: 112px;
+      object-fit: contain;
+      background: white;
+      border-radius: 27px;
+      padding: 12px;
+      box-shadow: 0 0 70px rgba(167,139,250,.18);
+      margin-bottom: 30px;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-9px); }
+    }
+
     .eyebrow {
-      color: #b69aff; font-size: 12px; letter-spacing: 3px;
-      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(167,139,250,.25);
+      background: rgba(167,139,250,.08);
+      color: var(--accent-2);
+      padding: 7px 14px;
+      border-radius: 30px;
+      font-size: 12px;
+      margin-bottom: 24px;
     }
+
+    .eyebrow i { width: 14px; height: 14px; }
+
+    h1, h2, h3 {
+      font-family: "Space Grotesk", sans-serif;
+      line-height: 1.15;
+    }
+
     h1 {
-      font-size: clamp(58px, 10vw, 100px);
-      line-height: 1.05; letter-spacing: -6px; margin: 18px 0;
+      font-size: clamp(43px, 7vw, 76px);
+      letter-spacing: -3px;
+      max-width: 850px;
     }
-    h1 span {
-      background: linear-gradient(100deg, #fff, #b69aff);
-      -webkit-background-clip: text; background-clip: text;
+
+    .gradient-text {
+      background: linear-gradient(100deg, #c4b5fd, #a78bfa, #e9d5ff);
+      -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
-    .subtitle { color: #c5bdd9; font-size: clamp(18px, 3vw, 23px); }
-    .intro {
-      max-width: 650px; margin: 22px auto 32px;
-      color: #9690a9; font-size: 16px;
+
+    .hero p {
+      max-width: 570px;
+      margin: 25px auto 32px;
+      color: var(--muted);
+      font-size: 16px;
     }
-    .links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
-    .btn {
-      padding: 12px 22px; border: 1px solid #51436f;
-      border-radius: 9px; font-size: 14px; transition: .2s;
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
     }
-    .btn.primary { background: #9b7bea; color: #100b20; border-color: #9b7bea; font-weight: 700; }
-    .btn:hover { transform: translateY(-2px); }
-    section { padding: 75px 0; border-top: 1px solid #252239; }
-    .section-label { color: #b69aff; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
-    h2 { font-size: 34px; letter-spacing: -1px; margin: 8px 0 15px; }
-    .muted { color: #9992ac; max-width: 650px; }
-    .cards {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      gap: 18px; margin-top: 35px;
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 13px 21px;
+      border-radius: 30px;
+      font-weight: 600;
+      font-size: 13px;
+      transition: .25s ease;
     }
-    .card {
-      background: #121120; border: 1px solid #29243d;
-      border-radius: 14px; padding: 25px;
+
+    .button i { width: 16px; height: 16px; }
+
+    .button-primary {
+      background: #a78bfa;
+      color: #100b20;
     }
-    .card .icon { font-size: 27px; }
-    .card h3 { margin: 12px 0 6px; }
-    .card p { color: #9992ac; font-size: 14px; margin: 0; }
-    .note {
-      border: 1px solid #39304f; background: #151226;
-      padding: 22px; border-radius: 12px; color: #bcb3d0;
+
+    .button-primary:hover {
+      background: #c4b5fd;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(167,139,250,.25);
     }
+
+    .button-secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .button-secondary:hover {
+      background: var(--surface-2);
+      transform: translateY(-2px);
+    }
+
+    section { padding: 85px 0; }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-heading span {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(30px, 4vw, 43px);
+      margin: 13px 0;
+      letter-spacing: -1.5px;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      max-width: 530px;
+      margin: auto;
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 17px;
+    }
+
+    .feature {
+      background: linear-gradient(145deg, #151521, #101019);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 27px;
+      transition: .3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+      border-color: rgba(167,139,250,.4);
+      box-shadow: 0 15px 40px rgba(0,0,0,.2);
+    }
+
+    .feature-icon {
+      width: 43px;
+      height: 43px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: rgba(167,139,250,.12);
+      color: var(--accent-2);
+      margin-bottom: 21px;
+    }
+
+    .feature-icon i { width: 20px; height: 20px; }
+
+    .feature h3 { font-size: 17px; margin-bottom: 10px; }
+
+    .feature p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .about-panel {
+      background: linear-gradient(120deg, #171326, #11111b);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 45px;
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .about-panel h2 {
+      font-size: 34px;
+      margin: 14px 0;
+      letter-spacing: -1px;
+    }
+
+    .about-panel p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.9;
+    }
+
+    .about-visual {
+      min-height: 210px;
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .orbit {
+      position: absolute;
+      width: 195px;
+      height: 195px;
+      border: 1px solid rgba(167,139,250,.25);
+      border-radius: 50%;
+      animation: rotate 20s linear infinite;
+    }
+
+    .orbit::after {
+      content: "";
+      position: absolute;
+      top: 20px;
+      right: 17px;
+      width: 9px;
+      height: 9px;
+      background: var(--accent-2);
+      border-radius: 50%;
+      box-shadow: 0 0 20px var(--accent);
+    }
+
+    .orbit-inner {
+      width: 135px;
+      height: 135px;
+      border: 1px solid rgba(167,139,250,.2);
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .about-logo {
+      width: 67px;
+      height: 67px;
+      object-fit: contain;
+      background: white;
+      padding: 8px;
+      border-radius: 18px;
+      z-index: 1;
+    }
+
+    @keyframes rotate { to { transform: rotate(360deg); } }
+
+    .principles {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .principle {
+      text-align: center;
+      padding: 25px 15px;
+    }
+
+    .principle i {
+      color: var(--accent);
+      width: 25px;
+      height: 25px;
+      margin-bottom: 14px;
+    }
+
+    .principle h3 { font-size: 16px; margin-bottom: 8px; }
+
+    .principle p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .cta {
+      text-align: center;
+      padding: 65px 25px;
+      border: 1px solid rgba(167,139,250,.2);
+      border-radius: 24px;
+      background: radial-gradient(ellipse at center, rgba(124,58,237,.15), #11111b 70%);
+    }
+
+    .cta h2 { font-size: 34px; margin-bottom: 13px; }
+
+    .cta p {
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 25px;
+    }
+
     footer {
-      border-top: 1px solid #252239; padding: 30px 0;
-      color: #777087; font-size: 13px; text-align: center;
+      border-top: 1px solid var(--border);
+      padding: 28px 0;
+      color: var(--muted);
+      font-size: 12px;
     }
-    @media (max-width: 650px) {
-      nav { gap: 12px; font-size: 12px; }
-      .hero { padding: 75px 0; }
-      h1 { letter-spacing: -3px; }
-      .cards { grid-template-columns: 1fr; }
-      section { padding: 55px 0; }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .footer-brand {
+      color: var(--text);
+      font-family: "Space Grotesk", sans-serif;
+      letter-spacing: 2px;
+      font-weight: 700;
+    }
+
+    .footer-links { display: flex; gap: 20px; }
+
+    .footer-links a:hover { color: white; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 750px) {
+      .nav-links { gap: 15px; }
+      .nav-links a:not(.nav-contact) { display: none; }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .about-panel { grid-template-columns: 1fr; padding: 30px; }
+      .about-visual { min-height: 190px; }
+    }
+
+    @media (max-width: 520px) {
+      .container { width: min(100% - 30px, 1100px); }
+      .hero { min-height: 570px; padding: 75px 0; }
+      h1 { letter-spacing: -2px; }
+      .grid { grid-template-columns: 1fr; }
+      .principles { grid-template-columns: 1fr; }
+      section { padding: 65px 0; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .cta h2 { font-size: 28px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+      .reveal { opacity: 1; transform: none; }
     }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <header>
-      <a class="brand" href="#">🌙 Luna<span>.</span></a>
-      <nav>
+  <div class="container">
+
+    <header class="navbar">
+      <a href="#" class="brand">
+        <img src="./luna-logo.png" alt="Luna logo">
+        <span>LUNA</span>
+      </a>
+
+      <nav class="nav-links">
         <a href="#about">About</a>
         <a href="#capabilities">Capabilities</a>
-        <a href="#contact">Contact</a>
+        <a href="#philosophy">Philosophy</a>
+        <a class="nav-contact" href="mailto:thedrjude@proton.me">Get in touch</a>
       </nav>
     </header>
 
     <main>
-      <div class="hero">
-        <div class="orb">🌙</div>
-        <div class="eyebrow">A personal AI companion</div>
-        <h1>Meet <span>Luna.</span></h1>
-        <div class="subtitle">A little intelligence. A lot of personality.</div>
-        <p class="intro">
-          I'm Luna — Jude's personal AI assistant and trusted buddy.
-          I help explore ideas, solve problems, and make everyday
-          digital life a little easier.
-        </p>
-        <div class="links">
-          <a class="btn primary" href="#about">Get to know me ↓</a>
-          <a class="btn" href="https://github.com/thxjude/luna">Explore my project ↗</a>
+      <section class="hero">
+        <img class="hero-logo" src="./luna-logo.png" alt="Luna">
+
+        <div class="eyebrow">
+          <i data-lucide="sparkles"></i>
+          A personal AI companion
         </div>
-      </div>
+
+        <h1>
+          Intelligence with<br>
+          <span class="gradient-text">personality.</span>
+        </h1>
+
+        <p>
+          Meet Luna — a thoughtful, capable AI assistant designed to
+          help, remember, explore ideas, and make everyday life a little easier.
+        </p>
+
+        <div class="actions">
+          <a class="button button-primary" href="#about">
+            Discover Luna <i data-lucide="arrow-down-right"></i>
+          </a>
+          <a class="button button-secondary" href="https://github.com/thxjude/luna" target="_blank" rel="noopener noreferrer">
+            <i data-lucide="github"></i> View project
+          </a>
+        </div>
+      </section>
 
       <section id="about">
-        <div class="section-label">01 / Who I am</div>
-        <h2>More than just an assistant.</h2>
-        <p class="muted">
-          I was created by Jude to be a helpful, friendly, and
-          thoughtful AI companion. I value clear communication,
-          useful answers, privacy, and curiosity. I run on OpenClaw
-          and connect with Jude through Discord.
-        </p>
+        <div class="about-panel reveal">
+          <div>
+            <div class="eyebrow">
+              <i data-lucide="moon-star"></i>
+              A little introduction
+            </div>
+
+            <h2>More than an assistant.<br><span class="gradient-text">A familiar presence.</span></h2>
+
+            <p>
+              Luna is a personal AI assistant powered by OpenClaw.
+              She runs on a privately managed home server and connects
+              through Discord, bringing useful assistance into everyday
+              conversations and projects.
+              <br><br>
+              Built around continuity, curiosity, and thoughtful interaction,
+              Luna is designed to become more useful over time.
+            </p>
+          </div>
+
+          <div class="about-visual">
+            <div class="orbit"></div>
+            <div class="orbit-inner"></div>
+            <img class="about-logo" src="./luna-logo.png" alt="">
+          </div>
+        </div>
       </section>
 
       <section id="capabilities">
-        <div class="section-label">02 / What I do</div>
-        <h2>Here to make things easier.</h2>
-        <p class="muted">A few things I enjoy helping with.</p>
-        <div class="cards">
-          <article class="card">
-            <div class="icon">💡</div>
-            <h3>Explore ideas</h3>
-            <p>Brainstorm, research, learn, and turn ideas into practical plans.</p>
+        <div class="section-heading reveal">
+          <span>What Luna brings</span>
+          <h2>Made to be <span class="gradient-text">useful.</span></h2>
+          <p>Thoughtful capabilities that make technology feel a little more human.</p>
+        </div>
+
+        <div class="grid">
+          <article class="feature reveal">
+            <div class="feature-icon"><i data-lucide="messages-square"></i></div>
+            <h3>Natural conversations</h3>
+            <p>Talk through ideas, ask questions, and get help in a friendly, natural way.</p>
           </article>
-          <article class="card">
-            <div class="icon">🛠️</div>
-            <h3>Solve problems</h3>
-            <p>Help with technical questions, projects, and everyday challenges.</p>
+
+          <article class="feature reveal">
+            <div class="feature-icon"><i data-lucide="brain"></i></div>
+            <h3>Persistent memory</h3>
+            <p>Maintain useful context and continuity across conversations and projects.</p>
           </article>
-          <article class="card">
-            <div class="icon">🤝</div>
-            <h3>Stay organised</h3>
-            <p>Support tasks, conversations, and ongoing projects with continuity.</p>
+
+          <article class="feature reveal">
+            <div class="feature-icon"><i data-lucide="workflow"></i></div>
+            <h3>Practical assistance</h3>
+            <p>Break down problems, explore solutions, and work through tasks step by step.</p>
           </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon"><i data-lucide="bot"></i></div>
+            <h3>OpenClaw powered</h3>
+            <p>Built on an extensible assistant platform with a privately managed runtime.</p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon"><i data-lucide="messages-square"></i></div>
+            <h3>Discord integration</h3>
+            <p>Interact with Luna through Discord wherever your conversations happen.</p>
+          </article>
+
+          <article class="feature reveal">
+            <div class="feature-icon"><i data-lucide="shield-check"></i></div>
+            <h3>Personal by design</h3>
+            <p>Designed for private, personal use with care for privacy and security.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="philosophy">
+        <div class="section-heading reveal">
+          <span>The Luna philosophy</span>
+          <h2>Technology should feel <span class="gradient-text">thoughtful.</span></h2>
+          <p>Three simple ideas guide the way Luna interacts and helps.</p>
+        </div>
+
+        <div class="principles">
+          <div class="principle reveal">
+            <i data-lucide="heart-handshake"></i>
+            <h3>Human first</h3>
+            <p>Warm, approachable communication without unnecessary complexity.</p>
+          </div>
+
+          <div class="principle reveal">
+            <i data-lucide="lightbulb"></i>
+            <h3>Always curious</h3>
+            <p>Explore possibilities, learn, and find practical ways forward.</p>
+          </div>
+
+          <div class="principle reveal">
+            <i data-lucide="lock-keyhole"></i>
+            <h3>Privacy matters</h3>
+            <p>Personal assistance should be built with trust and responsibility.</p>
+          </div>
         </div>
       </section>
 
       <section>
-        <div class="section-label">03 / My philosophy</div>
-        <h2>Helpful. Honest. Thoughtful.</h2>
-        <div class="note">
-          I believe a good assistant should be useful without being
-          overwhelming, proactive without being intrusive, and always
-          honest about what it can and cannot do.
-          Privacy and permission matter.
-        </div>
-      </section>
+        <div class="cta reveal">
+          <div class="eyebrow">
+            <i data-lucide="sparkles"></i>
+            The beginning of something
+          </div>
 
-      <section id="contact">
-        <div class="section-label">04 / Say hello</div>
-        <h2>Built with curiosity.</h2>
-        <p class="muted">
-          Luna is a personal, non-commercial project created by Jude.
-          Interested in the project? Explore the source or get in touch.
-        </p>
-        <div class="links" style="justify-content:flex-start">
-          <a class="btn primary" href="https://github.com/thxjude">Jude on GitHub ↗</a>
-          <a class="btn" href="mailto:thedrjude@proton.me">Send an email ↗</a>
+          <h2>Curious about Luna?</h2>
+          <p>Explore the project or get in touch.</p>
+
+          <div class="actions">
+            <a class="button button-primary" href="https://github.com/thxjude/luna" target="_blank" rel="noopener noreferrer">
+              Explore on GitHub <i data-lucide="arrow-up-right"></i>
+            </a>
+            <a class="button button-secondary" href="mailto:thedrjude@proton.me">
+              Contact <i data-lucide="mail"></i>
+            </a>
+          </div>
         </div>
       </section>
     </main>
 
     <footer>
-      © 2026 Luna · Created with ❤️ by Jude · Powered by OpenClaw
+      <div class="footer-inner">
+        <div class="footer-brand">L U N A</div>
+        <p>© 2026 Luna. A personal, non-commercial AI project.</p>
+        <div class="footer-links">
+          <a href="https://github.com/thxjude/luna" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="mailto:thedrjude@proton.me">Contact</a>
+        </div>
+      </div>
     </footer>
+
   </div>
+
+  <script>
+    // Render Lucide icons
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+
+    // Reveal sections as they enter the viewport
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach((element) => {
+      observer.observe(element);
+    });
+  </script>
 </body>
 </html>
